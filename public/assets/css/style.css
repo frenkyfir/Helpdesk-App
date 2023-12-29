@@ -1,0 +1,109 @@
+.comment-area {
+}
+
+.comment-container {
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.comment-user {
+    font-weight: bold;
+    font-size: medium;
+    color: black;
+}
+
+.comment-delete-button {
+}
+
+.comment-text {
+    font-size: medium;
+    color: black;
+}
+
+.comment-created {
+    font-weight: bold;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: inherit;
+}
+
+.loading-spinner {
+    text-align: center;
+}
+
+.loading-spinner2 {
+    text-align: center;
+}
+
+
+.object-spinner2 {
+    width: 3rem;
+    height: 3rem;
+}
+
+.object-spinner {
+    width: 3rem;
+    height: 3rem;
+}
+
+.button-save{
+    text-align: right;
+    padding: 20px;
+}
+
+.labeles{
+    
+}
+.contact-class{
+    border: 1px solid var(--bs-gray-300);
+    border-radius: 0.475rem;
+    line-height: 1.5;
+    padding: 0.775rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 1px solid var(--bs-gray-300);
+    float: right;
+    width: calc(100% - 200px);
+    /* display: block;
+    
+    color: var(--bs-gray-700);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    box-shadow: false;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
+}
+
+.contact-class.contact-class-solid{
+    background-color: var(--bs-gray-100);
+    border-color: var(--bs-gray-100);
+    color: var(--bs-gray-700);
+    transition: color 0.2s ease;
+}
+
+
+.label-padding{
+    padding: 30px;
+}
+
+.checkbox-class{
+    margin-left: 120px;
+}
+
+.save-button{
+    border: outset;
+}
+
+@media only screen and (max-width: 760px) { 
+     .label-padding{
+        padding: 0px;
+}
+.contact-class{
+    width: calc(100% - 120px);
+}
+}
