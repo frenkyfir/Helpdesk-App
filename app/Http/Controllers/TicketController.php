@@ -63,25 +63,21 @@ class TicketController extends Controller
 
         $ticket = Ticket::create([
             'number' => $request->input('number'),
-            'active' => '1',
-            // 'subject' => Str::ucfirst($request->input('subject')),
-            // 'requester' => Str::ucfirst($request->input('requester')),
             'problem_detail' => $request->input('problem_detail'),
             'user_id' => $request->input('user_id'),
             'status_id' => $request->input('status_id'),
-            // 'companies_id' => $request->input('companies_id'),
+            'companies_id' => $request->input('companies_id'),
+            'opened_behalf' => $request->input('opened_behalf'),
+            'contact_response' => $request->input('contact_response'),
             'channel_id' => $request->input('channel_id'),
-            // 'priority_id' => $request->input('priority_id'),
-            // 'category_id' => $request->input('category_id'),
-            // 'due_date' => $request->input('due_date'),
             'open_by' => auth()->user()->name
         ]);
-        // if ($image = $request->file('image_problem')) {
-        //     $destinationPath = 'openticketimage/';
-        //     $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //     $image->move($destinationPath, $profileImage);
-        //     $ticket['image_problem'] = "$profileImage";
-        // }
+        if ($image = $request->file('attachment_file')) {
+            $destinationPath = 'attachtment_file/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $ticket['attachment_file'] = "$profileImage";
+        }
 
         $ticket->save();
 
@@ -123,7 +119,6 @@ class TicketController extends Controller
         $ticket->user_id = $request->input('user_id');
         $ticket->status_id = $request->input('status_id');
         $ticket->channel_id = $request->input('channel_id');
-        $ticket->active = $request->input('active');
         $ticket->update();
 
 

@@ -41,7 +41,8 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15" id="addModal">
                     <!--begin:Form-->
-                    <form class="form" action="{{ route('createticket') }}" id="addTicketForm" method="POST">
+                    <form class="form" action="{{ route('createticket') }}" id="addTicketForm" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
@@ -76,8 +77,14 @@
                             </div>
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
-                                <label class="  fs-6 fw-semibold mb-2">Contact : <input class="contact-class"
-                                        type="text" value="" name="contact" /></label>
+                                <label class="  fs-6 fw-semibold mb-2">Contact<select name="contact_response"
+                                        class="contact-class contact_response" aria-label="Default select example">
+                                        <option value="{{ Auth::user()->name }}">{{ Auth::user()->name }}</option>
+                                        @foreach ($adduser as $userList)
+                                            <option value="{{ $userList->name }}">{{ $userList->name }}</option>
+                                        @endforeach
+
+                                    </select></label>
                             </div>
                             <div class="col-md-6 fv-row">
                                 <label class="label-padding required fs-6 fw-semibold mb-2">State<select
@@ -93,8 +100,9 @@
                                         class="contact-class" type="text" value="" name="contact" /></label> --}}
                             </div>
                             <div class="col-md-6 fv-row">
-                                <label class=" fs-6 fw-semibold mb-2">Opened on behalf of : <input class="contact-class"
-                                        type="text" value="" name="contact" /></label>
+                                <label class=" fs-6 fw-semibold mb-2">Opened on behalf of : <input
+                                        class="contact-class opened_behalf" type="text" value=""
+                                        name="opened_behalf" /></label>
                             </div>
                             <div class="col-md-6 fv-row">
                                 <label class=" label-padding fs-6 fw-semibold mb-2">Opened By<input disabled
@@ -153,7 +161,10 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
-
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-semibold mb-2">Attachment</label>
+                            <input type="file" name="attachment_file" class="attachment_file">
+                        </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">Short Description</label>
                             <textarea required class="form-control form-control-solid problem_detail" rows="1" name="problem_detail"
@@ -353,7 +364,7 @@
                     success: function(response) {
                         const fetchTickets = response.fetchTickets;
 
-                        // console.log(fetchTickets);
+                        console.log(fetchTickets);
                         let content = ``;
                         for (let i = 0; i < fetchTickets.length; i++) {
                             const ticket = fetchTickets[i];
@@ -421,7 +432,6 @@
             }
             $(document).on('click', '.create-ticket', function(e) {
                 e.preventDefault();
-                // console.log('haha');
                 var data = {
                     'number': $('.number').val(),
                     'status_id': $('.status').val(),
@@ -429,6 +439,10 @@
                     'companies_id': $('.company').val(),
                     'channel_id': $('.channel-id').val(),
                     'problem_detail': $('.problem_detail').val(),
+                    'opened_behalf': $('.opened_behalf').val(),
+                    'contact_response': $('.contact_response').val(),
+                    'attachment_file': $('.attachment_file').val(),
+
 
 
                     // 'opened_by' : $(.'')
@@ -516,7 +530,7 @@
                 // console.log(user);
 
                 document.getElementById('ticketNumber').value = ticketNumber;
-                // document.getElementById('userName').value = user;
+                document.getElementById('contactAuth').value = user;
 
 
             });

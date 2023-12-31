@@ -298,8 +298,16 @@
                 </div>
                        `;
                         content += `<div class="col-md-6 fv-row">
-                    <label class="  fs-6 fw-semibold mb-2">Contact <input class="contact-class" type="text"
-                            value="" name="contact" /></label>
+                    <label class="  fs-6 fw-semibold mb-2">Contact 
+                        <select name="contact_response" class="contact-class contact_response" aria-label="Default select example">
+                            <option value="${detailTicket.users.id}">${detailTicket.contact_response}</option>`;
+                        userList.forEach(function(user) {
+                            content += `<option value="${user.id}">${user.name}</option>`;
+                        });
+
+                        content += `
+                        </select>
+                        </label>
                 </div>
                        `;
                         content += `  <div class="col-md-6 fv-row">
@@ -312,7 +320,7 @@
                        `;
                         content += `  <div class="col-md-6 fv-row">
                     <label class=" fs-6 fw-semibold mb-2">Opened on behalf of  <input class="contact-class"
-                            type="text" value="" name="contact" /></label>
+                            type="text" value="${detailTicket.opened_behalf}" name="contact" /></label>
                 </div>
                        `;
                         content += `<div class="col-md-6 fv-row">
@@ -376,7 +384,7 @@
                 </div>`
 
                         content += `<div class="col-md-6 fv-row">
-                    <label class="required fs-6 fw-semibold mb-2">Impacted Application<input class="contact-class"
+                    <label class="required fs-6 fw-semibold mb-2">Impacted<input class="contact-class"
                             type="text" value="" name="contact" /></label>
 
                 </div>`
@@ -407,7 +415,6 @@
                 const ticketId = {!! $detailticket->toJson() !!};
                 // console.log(ticketId);
                 var data = {
-                    'active_id': $('.active_id').val(),
                     'status_id': $('.status_id').val(),
                     'user_id': $('.user_id').val(),
                     'channel_id': $('.channel_id').val(),
