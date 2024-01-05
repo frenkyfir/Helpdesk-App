@@ -1,8 +1,5 @@
 <x-default-layout>
-    {{-- <link rel="stylesheet" type="text/css" href="/media/css/site-examples.css?_=41cab7b2e63a641a482f02634433cc4c1"> --}}
-    {{-- <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"> --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
+
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -96,8 +93,7 @@
                                         @endforeach
 
                                     </select></label>
-                                {{-- <label class="label-padding  fs-6 fw-semibold mb-2">Opened : <input disabled
-                                        class="contact-class" type="text" value="" name="contact" /></label> --}}
+
                             </div>
                             <div class="col-md-6 fv-row">
                                 <label class=" fs-6 fw-semibold mb-2">Opened on behalf of : <input
@@ -273,57 +269,7 @@
                         <!--begin::Table body-->
                         <tbody id="area-tickets">
 
-                            {{-- @foreach ($ticket as $ticketIndex)
-                                <tr>
-                                    <td class="text-start ">
-                                        <a href="/detailticket/{{ $ticketIndex->ticket_id }}"
-                                            class="text-gray-600 fw-bold fs-6">{{ $ticketIndex->number }}</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
 
-                                            <div class="d-flex justify-content-start flex-column">
-
-                                                <span
-                                                    class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $ticketIndex->open_by }}</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-start ">
-                                        <span
-                                            class="text-gray-600 fw-bold fs-6">{{ $ticketIndex->companies->name ?? 'ds' }}</span>
-                                    </td>
-                                    <td class="text-start">
-
-                                        <span
-                                            class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $ticketIndex->users->name ?? 'User not found ' }}</span>
-
-                                    </td>
-                                    <td class="text-start ">
-
-                                        <span id="statusColour"
-                                            class="fw-bold
-                                        @if ($ticketIndex->statuses && $ticketIndex->statuses->name) @if ($ticketIndex->statuses->name == 'Open') btn btn-sm btn-success
-                                                @elseif ($ticketIndex->statuses->name == 'Pending') btn btn-sm btn-warning
-                                                @elseif ($ticketIndex->statuses->name == 'Resolve') btn btn-sm btn-info
-                                                @elseif ($ticketIndex->statuses->name == 'Close') btn btn-sm btn-danger
-                                                @else btn btn-sm btn-secondary @endif"
-                                        @else btn btn-sm btn-secondary @endif">
-                                            {{ $ticketIndex->statuses->name ?? '' }}
-                                        </span>
-                                    </td>
-                                    <td class="text-start ">
-                                        <span
-                                            class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ \Carbon\Carbon::parse($ticketIndex->created_at)->format('d F Y H:i') }}</span>
-                                    </td>
-                                    <td class="text-end pe-16">
-                                        <a href="/deleteticket/{{ $ticketIndex->ticket_id }}"
-                                            class="ticket-delete-button bi bi-trash"
-                                            onclick="return myFunction()"></a>
-                                    </td>
-
-                                </tr>
-                            @endforeach --}}
 
                         </tbody>
                         {{-- <div class="loading-spinner">
@@ -335,6 +281,7 @@
                         <!--end::Table body-->
                     </table>
                 </div>
+                <div id="pagination-links"></div>
                 <!--end::Table-->
             </div>
             <!--end: Card Body-->
@@ -344,13 +291,14 @@
     <script src="../assets/js/jquery.js"></script>
     <script src="../assets/bootstrap4/bootstrap.min.js"></script>
     <script src="../assets/bootstrap4/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/DataTables/datatables.js"></script>
+    {{-- <script src="../assets/DataTables/datatables.js"></script> --}}
 
 
 
 
     <script>
         $(document).ready(function() {
+
             fetchTickets();
 
             function fetchTickets() {
@@ -432,23 +380,21 @@
             }
             $(document).on('click', '.create-ticket', function(e) {
                 e.preventDefault();
-                var data = {
-                    'number': $('.number').val(),
-                    'status_id': $('.status').val(),
-                    'user_id': $('.user-id').val(),
-                    'companies_id': $('.company').val(),
-                    'channel_id': $('.channel-id').val(),
-                    'problem_detail': $('.problem_detail').val(),
-                    'opened_behalf': $('.opened_behalf').val(),
-                    'contact_response': $('.contact_response').val(),
-                    'attachment_file': $('.attachment_file').val(),
+                // Create a FormData object to handle the file upload
+                var formData = new FormData();
+                formData.append('number', $('.number').val());
+                formData.append('status_id', $('.status').val());
+                formData.append('user_id', $('.user-id').val());
+                formData.append('companies_id', $('.company').val());
+                formData.append('channel_id', $('.channel-id').val());
+                formData.append('problem_detail', $('.problem_detail').val());
+                formData.append('opened_behalf', $('.opened_behalf').val());
+                formData.append('contact_response', $('.contact_response').val());
 
+                // Append the file input to the FormData object
+                var fileInput = $('.attachment_file')[0];
+                formData.append('attachment_file', fileInput.files[0]);
 
-
-                    // 'opened_by' : $(.'')
-
-                }
-                console.log(data);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -458,7 +404,9 @@
                 $.ajax({
                     type: "POST",
                     url: "/createticket",
-                    data: data,
+                    data: formData,
+                    contentType: false, // Set content type to false for FormData
+                    processData: false,
                     dataType: "json",
                     success: function(response) {
                         $('#kt_modal_new_target').modal('hide');
@@ -500,17 +448,6 @@
             });
         })
     </script>
-    <script></script>
-
-    {{-- <script>
-        function myFunction() {
-            if (!confirm("Are You Sure to delete this"))
-                event.preventDefault();
-        }
-    </script> --}}
-
-
-    <script></script>
 
     <script>
         function generateTicketNumber() {

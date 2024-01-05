@@ -61,6 +61,17 @@ class TicketController extends Controller
     public function store(Request $request)
     {
 
+
+        // $attachmentFile = $request->file('attachment_file');
+        // $attachmentFile->storeAs('public/files', $attachmentFile->hashName());
+        // if ($file = $request->file('attachment_file')) {
+        //     $destinationPath = 'attachtment_file/';
+        //     $profileImage = date('YmdHis') . "." . $file->getClientOriginalExtension();
+        //     $file->move($destinationPath, $profileImage);
+        //     $ticket['attachment_file'] = "$profileImage";
+        // }
+
+
         $ticket = Ticket::create([
             'number' => $request->input('number'),
             'problem_detail' => $request->input('problem_detail'),
@@ -70,16 +81,23 @@ class TicketController extends Controller
             'opened_behalf' => $request->input('opened_behalf'),
             'contact_response' => $request->input('contact_response'),
             'channel_id' => $request->input('channel_id'),
-            'open_by' => auth()->user()->name
+            'open_by' => auth()->user()->name,
+            // 'attachment_file' => $request->input('attachment_file')
         ]);
-        if ($image = $request->file('attachment_file')) {
-            $destinationPath = 'attachtment_file/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+        if ($file = $request->file('attachment_file')) {
+            $destinationPath = 'file/';
+            $profileImage = $file->getClientOriginalName() . "." . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $profileImage);
             $ticket['attachment_file'] = "$profileImage";
         }
-
         $ticket->save();
+
+        // $input = $request->all();
+
+
+
+
+        // Ticket::create($input);
 
         return response()->json([
             'status' => 200,

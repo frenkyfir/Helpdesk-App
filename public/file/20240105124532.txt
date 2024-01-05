@@ -1,0 +1,7 @@
+lg
+port 1 ptz
+port 2 lobby lift 
+
+
+b1 
+port 4 hsl lift service

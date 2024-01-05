@@ -11,7 +11,10 @@
 
 
     <div class="card mt-4 p-4" id="content">
+
+
         <div class="button-save">
+
             <button class="btn btn-sm btn-primary save-button ">Save</button>
 
             {{-- <button class="btn btn-sm "style="border: outset"></button> --}}
@@ -27,96 +30,7 @@
                 </div>
             </div>
             <div class="row g-3" id="ticket-area">
-                {{-- <div class="col-md-6 fv-row">
-                    <label class=" fs-6 fw-semibold mb-2">Number <input class="contact-class number" type="text"
-                            name="number" disabled value="{{ $detailticket->number }}" id="ticketNumber"></label>
-                </div> --}}
-                {{-- <div class="col-md-6 fv-row">
-                    <label class="label-padding  fs-6 fw-semibold mb-2">Active? <input class="checkbox-class"
-                            type="checkbox" value="" name="contact" /></label>
-                </div> --}}
-                <!--begin::Col-->
-                {{-- <div class="col-md-6 fv-row">
-                        <label class="  fs-6 fw-semibold mb-2">Contact <input class="contact-class" type="text"
-                                value="" name="contact" /></label>
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class="label-padding  fs-6 fw-semibold mb-2">Opened <input disabled class="contact-class"
-                                type="text"
-                                value="{{ Carbon\Carbon::parse($detailticket->created_at)->format('d F Y H:i') }}
-                                "
-                                name="contact" /></label>
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class=" fs-6 fw-semibold mb-2">Opened on behalf of : <input class="contact-class"
-                                type="text" value="" name="contact" /></label>
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class=" label-padding fs-6 fw-semibold mb-2">Opened By<input disabled class="contact-class"
-                                type="text" value="{{ $detailticket->open_by }}" id="userName" name="contact" /></label>
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class="required fs-6 fw-semibold mb-2">State
-                            <select name="status_id" class="contact-class status-id" aria-label="Default select example">
-                                <option value="{{ $detailticket->statuses->name }}">{{ $detailticket->statuses->name }}
-                                </option>
-                                @foreach ($statusList as $statusList)
-                                    <option value="{{ $statusList->id }}">{{ $statusList->name }}</option>
-                                @endforeach
 
-                            </select>
-                        </label>
-
-                    </div>
-
-                    <div class="col-md-6 fv-row">
-                        <label class="label-padding required fs-6 fw-semibold mb-2">Assigned to
-                            <select name="user_id" class="contact-class user-id" aria-label="Default select example">
-                                <option value="{{ $detailticket->users->name }}">{{ $detailticket->users->name }}</option>
-                                @foreach ($addUser as $userList)
-                                    <option value="{{ $userList->id }}">{{ $userList->name }}</option>
-                                @endforeach
-
-                            </select>
-                        </label>
-
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class="required fs-6 fw-semibold mb-2">Marsha
-                            <input type="text" class="contact-class" disabled
-                                value="{{ $detailticket->companies->name ?? '' }}" name="company_id" id="">
-                        </label>
-
-
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class="label-padding required fs-6 fw-semibold mb-2">Contact Type
-                            <select required name="channel_id" class="contact-class channel-id"
-                                aria-label="Default select example">
-                                <option value="{{ $detailticket->channels->name }}">{{ $detailticket->channels->name }}
-                                </option>
-                                @foreach ($contactList as $channellist)
-                                    <option value="{{ $channellist->id }}">{{ $channellist->name }}</option>
-                                @endforeach
-
-                            </select>
-                        </label>
-
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class="required fs-6 fw-semibold mb-2">Intercation type <input class="contact-class"
-                                type="text" value="" name="contact" /></label>
-
-                    </div>
-                    <div class="col-md-6 fv-row">
-                        <label class="label-padding required fs-6 fw-semibold mb-2">Duration <input class="contact-class"
-                                type="text" value="" name="contact" /></label>
-
-                    </div> --}}
-                <!--end::Col-->
-                <!--begin::Col-->
-
-                <!--end::Col-->
             </div>
             <!--end::Input group-->
             <!--begin::Input group-->
@@ -269,7 +183,7 @@
                     url: `/fetchdetailticket/${ticket.ticket_id}`,
                     dataType: "json",
                     success: function(response) {
-                        // console.log(response);
+                        console.log(response);
                         $('.loading-spinner2').hide();
                         $('#ticket-area').show();
 
@@ -398,6 +312,12 @@
                 <label class="fs-6 fw-semibold mb-2">Short Description</label>
                 <input disabled type="text" class="form-control" name="problem_detail"
                     value="{{ $detailticket->problem_detail }}">
+            </div>`
+                        content += `<div class="d-flex flex-column mb-4">
+                <label class="fs-6 fw-semibold mb-2">Attachment</label>
+                <input type="text" class="form-control" name="problem_detail"
+                    value="">
+                    
             </div>`
 
 
